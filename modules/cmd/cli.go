@@ -87,6 +87,10 @@ func (c *CLI) handleCommands(args []string) error {
 		path := args[2]
 
 		key := common.BytesToKey([]byte(keyStr))
+		if keyStr == `""` {
+			c.logger.Warn("No key provided. Initializing with an empty key.")
+			key = common.BytesToKey([]byte(""))
+		}
 
 		c.logger.Info("Initializing database with key:", key, "at path:", path)
 		db, err := polarysdb.Init(key, path)
@@ -103,6 +107,10 @@ func (c *CLI) handleCommands(args []string) error {
 		path := args[2]
 
 		key := common.BytesToKey([]byte(keyStr))
+		if keyStr == `""` {
+			c.logger.Warn("No key provided. Initializing with an empty key.")
+			key = common.BytesToKey([]byte(""))
+		}
 
 		c.logger.Info("Exporting database with key:", key, "to path:", path)
 		if c.db == nil {
@@ -121,6 +129,10 @@ func (c *CLI) handleCommands(args []string) error {
 		path := args[2]
 
 		key := common.BytesToKey([]byte(keyStr))
+		if keyStr == `""` {
+			c.logger.Warn("No key provided. Initializing with an empty key.")
+			key = common.BytesToKey([]byte(""))
+		}
 
 		c.logger.Info("Importing database with key:", key, "from path:", path)
 		if c.db == nil {
@@ -139,6 +151,10 @@ func (c *CLI) handleCommands(args []string) error {
 		path := args[2]
 
 		key := common.BytesToKey([]byte(keyStr))
+		if keyStr == `""` {
+			c.logger.Warn("No key provided. Initializing with an empty key.")
+			key = common.BytesToKey([]byte(""))
+		}
 
 		c.logger.Info("Exporting encrypted database with key:", key, "to path:", path)
 		if c.db == nil {
@@ -157,6 +173,10 @@ func (c *CLI) handleCommands(args []string) error {
 		path := args[2]
 
 		key := common.BytesToKey([]byte(keyStr))
+		if keyStr == `""` {
+			c.logger.Warn("No key provided. Initializing with an empty key.")
+			key = common.BytesToKey([]byte(""))
+		}
 
 		c.logger.Info("Importing encrypted database with key:", key, "from path:", path)
 		if c.db == nil {
@@ -197,6 +217,10 @@ func (c *CLI) handleCommands(args []string) error {
 }
 
 func (c *CLI) Shutdown() {
+	if c.db != nil {
+		c.db.Close()
+	}
+
 	if err := c.logger.Close(); err != nil {
 		fmt.Println("error closing logger:", err)
 	}
