@@ -62,6 +62,9 @@ func (c *CLI) Run() {
 			}
 		}
 	}()
+
+	<-stop
+	c.logger.Info("Shutting down bot gracefully...")
 }
 
 func (c *CLI) handleCommands(args []string) error {
