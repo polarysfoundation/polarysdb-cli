@@ -8,8 +8,9 @@ import (
 	"syscall"
 
 	"github.com/chzyer/readline"
-	polarysdb "github.com/polarysfoundation/polarys_db"
+	polarysdb "github.com/polarysfoundation/polarysdb"
 	"github.com/polarysfoundation/polarysdb-cli/modules/logger"
+	"github.com/polarysfoundation/polarysdb/modules/common"
 )
 
 type CLI struct {
@@ -74,11 +75,20 @@ func (c *CLI) handleCommands(args []string) error {
 		if len(args) != 3 {
 			return fmt.Errorf("usage: init <key> <path>")
 		}
-		key := args[1]
+		keyStr := args[1]
 		path := args[2]
 
+		var key common.Key
+		if len(key) == 32 {
+			key = common.HexToKey(keyStr)
+		} else if len(key) < 32 {
+			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		} else {
+			key = polarysdb.GenerateKey()
+		}
+
 		c.logger.Info("Initializing database with key:", key, "at path:", path)
-		db, err := polarysdb.Init(polarysdb.GenerateKeyFromBytes([]byte(key)), path)
+		db, err := polarysdb.Init(key, path)
 		if err != nil {
 			return err
 		}
