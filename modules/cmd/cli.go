@@ -108,7 +108,7 @@ func (c *CLI) handleCommands(args []string) error {
 
 		key := common.BytesToKey([]byte(keyStr))
 		if keyStr == `""` {
-			c.logger.Warn("No key provided. Initializing with an empty key.")
+			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
 		}
 
@@ -130,7 +130,7 @@ func (c *CLI) handleCommands(args []string) error {
 
 		key := common.BytesToKey([]byte(keyStr))
 		if keyStr == `""` {
-			c.logger.Warn("No key provided. Initializing with an empty key.")
+			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
 		}
 
@@ -152,7 +152,7 @@ func (c *CLI) handleCommands(args []string) error {
 
 		key := common.BytesToKey([]byte(keyStr))
 		if keyStr == `""` {
-			c.logger.Warn("No key provided. Initializing with an empty key.")
+			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
 		}
 
@@ -174,7 +174,7 @@ func (c *CLI) handleCommands(args []string) error {
 
 		key := common.BytesToKey([]byte(keyStr))
 		if keyStr == `""` {
-			c.logger.Warn("No key provided. Initializing with an empty key.")
+			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
 		}
 
