@@ -86,7 +86,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		key := common.BytesToKey([]byte(keyStr))
+		key := common.StringToKey(keyStr)
 		if keyStr == `""` {
 			c.logger.Warn("No key provided. Initializing with an empty key.")
 			key = common.BytesToKey([]byte(""))
@@ -106,7 +106,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		key := common.BytesToKey([]byte(keyStr))
+		key := common.StringToKey(keyStr)
 		if keyStr == `""` {
 			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
@@ -128,7 +128,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		key := common.BytesToKey([]byte(keyStr))
+		key := common.StringToKey(keyStr)
 		if keyStr == `""` {
 			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
@@ -150,7 +150,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		key := common.BytesToKey([]byte(keyStr))
+		key := common.StringToKey(keyStr)
 		if keyStr == `""` {
 			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
@@ -172,7 +172,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		key := common.BytesToKey([]byte(keyStr))
+		key := common.StringToKey(keyStr)
 		if keyStr == `""` {
 			c.logger.Warn("No key provided. Parsing an empty key.")
 			key = common.BytesToKey([]byte(""))
@@ -196,16 +196,22 @@ func (c *CLI) handleCommands(args []string) error {
 			return fmt.Errorf("usage: key-from <string>")
 		}
 		keyStr := args[1]
-		key := polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		keyTemp := common.StringToKey(keyStr)
+		keyByte := keyTemp.Bytes()
+		key := polarysdb.GenerateKeyFromBytes(keyByte)
 		c.logger.Info("Key generated from string:", key.String())
 	case "change-key":
 		if len(args) != 3 {
 			return fmt.Errorf("usage: change-key <old-key> <new-key>")
 		}
 		oldKeyStr := args[1]
-		oldKey := common.BytesToKey([]byte(oldKeyStr))
-		newKeyStr := args[1]
-		newKey := common.BytesToKey([]byte(newKeyStr))
+		oldKey := common.StringToKey(oldKeyStr)
+		if oldKeyStr == `""` {
+			c.logger.Warn("No key provided. Parsing an empty key.")
+			oldKey = common.BytesToKey([]byte(""))
+		}
+		newKeyStr := args[2]
+		newKey := common.StringToKey(newKeyStr)
 		if newKeyStr == `""` {
 			c.logger.Warn("No key provided. Parsing an empty key.")
 			newKey = common.BytesToKey([]byte(""))
