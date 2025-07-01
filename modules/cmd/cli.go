@@ -21,17 +21,22 @@ type CLI struct {
 }
 
 func NewCLI() *CLI {
+
+	log := logger.NewLogger(logger.Config{
+		LogFilePath: "app.log",
+		MinLevel:    logger.LevelInfo,
+		ToConsole:   true,
+		ToFile:      true,
+	})
 	return &CLI{
 		db:       nil,
 		commands: Commands,
-		logger:   logger.NewLogger(),
+		logger:   log,
 		version:  "v1.0.0",
 	}
 }
 
 func (c *CLI) Run() {
-	c.logger.Init() // Initialize the logger
-
 	c.logger.Info("PolarysDB CLI Version:", c.version)
 
 	stop := make(chan os.Signal, 1)
@@ -171,4 +176,10 @@ func (c *CLI) handleCommands(args []string) error {
 	}
 	return nil
 
+}
+
+func (c *CLI) Shutdown() {
+	if err := c.logger.Close(); err != nil {
+		fmt.Println("error closing logger:", err)
+	}
 }
