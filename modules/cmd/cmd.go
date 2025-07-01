@@ -32,4 +32,9 @@ var Commands = []Command{
 		Description: "Import encrypted data from a file .json",
 		Args:        []string{"key", "path"},
 	},
+	{
+		Name:        "help",
+		Description: "Show help",
+		Args:        nil,
+	},
 }

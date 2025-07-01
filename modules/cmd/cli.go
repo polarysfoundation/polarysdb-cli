@@ -32,10 +32,6 @@ func (c *CLI) Run() {
 	c.logger.Init() // Initialize the logger
 
 	c.logger.Info("PolarysDB CLI Version:", c.version)
-	c.logger.Info("Available commands:")
-	for _, cmd := range c.commands {
-		c.logger.Info(cmd.Name+":", cmd.Description)
-	}
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
@@ -65,7 +61,6 @@ func (c *CLI) Run() {
 			}
 		}
 	}()
-
 }
 
 func (c *CLI) handleCommands(args []string) error {
@@ -153,6 +148,11 @@ func (c *CLI) handleCommands(args []string) error {
 			return err
 		}
 		c.logger.Info("Encrypted database imported successfully.")
+	case "help":
+		c.logger.Info("Available commands:")
+		for _, cmd := range c.commands {
+			c.logger.Info(cmd.Name+":", cmd.Description)
+		}
 	default:
 		return fmt.Errorf("unknown command: %s", commandName)
 	}
