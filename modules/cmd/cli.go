@@ -198,6 +198,28 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		key := polarysdb.GenerateKeyFromBytes([]byte(keyStr))
 		c.logger.Info("Key generated from string:", key.KeyToString())
+	case "change-key":
+		if len(args) != 3 {
+			return fmt.Errorf("usage: change-key <old-key> <new-key>")
+		}
+		oldKeyStr := args[1]
+		oldKey := common.BytesToKey([]byte(oldKeyStr))
+		newKeyStr := args[1]
+		newKey := common.BytesToKey([]byte(newKeyStr))
+		if newKeyStr == `""` {
+			c.logger.Warn("No key provided. Parsing an empty key.")
+			newKey = common.BytesToKey([]byte(""))
+		}
+
+		c.logger.Info("Changing database key to:", newKey)
+		if c.db == nil {
+			return fmt.Errorf("database not initialized. Please run 'init' first")
+		}
+		err := c.db.ChangeKey(oldKey, newKey)
+		if err != nil {
+			return err
+		}
+		c.logger.Info("Database key changed successfully.")
 	case "exit":
 		c.logger.Info("Exiting CLI.")
 		os.Exit(0)

@@ -5,6 +5,6 @@ go 1.24.4
 require (
 	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/polarysfoundation/pm-256 v0.0.0-20250112065549-cb7b6eb92c94 // indirect
-	github.com/polarysfoundation/polarysdb v1.0.2-0.20250701021941-7e13f8425bba // indirect
+	github.com/polarysfoundation/polarysdb v1.0.2-0.20250701043338-33c07b9614ef // indirect
 	golang.org/x/sys v0.0.0-20220310020820-b874c991c1a5 // indirect
 )

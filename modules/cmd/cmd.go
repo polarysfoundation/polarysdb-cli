@@ -43,6 +43,11 @@ var Commands = []Command{
 		Args:        []string{"string"},
 	},
 	{
+		Name:        "change-key",
+		Description: "Change the key of the database",
+		Args:        []string{"old-key", "new-key"},
+	},
+	{
 		Name:        "exit",
 		Description: "Exit CLI",
 		Args:        nil,
