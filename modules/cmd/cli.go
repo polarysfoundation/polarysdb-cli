@@ -86,14 +86,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		var key common.Key
-		if len(key) == 32 {
-			key = common.HexToKey(keyStr)
-		} else if len(key) < 32 {
-			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
-		} else {
-			key = polarysdb.GenerateKey()
-		}
+		key := common.BytesToKey([]byte(keyStr))
 
 		c.logger.Info("Initializing database with key:", key, "at path:", path)
 		db, err := polarysdb.Init(key, path)
@@ -109,14 +102,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		var key common.Key
-		if len(key) == 32 {
-			key = common.HexToKey(keyStr)
-		} else if len(key) < 32 {
-			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
-		} else {
-			key = polarysdb.GenerateKey()
-		}
+		key := common.BytesToKey([]byte(keyStr))
 
 		c.logger.Info("Exporting database with key:", key, "to path:", path)
 		if c.db == nil {
@@ -134,14 +120,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		var key common.Key
-		if len(key) == 32 {
-			key = common.HexToKey(keyStr)
-		} else if len(key) < 32 {
-			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
-		} else {
-			key = polarysdb.GenerateKey()
-		}
+		key := common.BytesToKey([]byte(keyStr))
 
 		c.logger.Info("Importing database with key:", key, "from path:", path)
 		if c.db == nil {
@@ -159,14 +138,7 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		var key common.Key
-		if len(key) == 32 {
-			key = common.HexToKey(keyStr)
-		} else if len(key) < 32 {
-			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
-		} else {
-			key = polarysdb.GenerateKey()
-		}
+		key := common.BytesToKey([]byte(keyStr))
 
 		c.logger.Info("Exporting encrypted database with key:", key, "to path:", path)
 		if c.db == nil {
@@ -184,14 +156,8 @@ func (c *CLI) handleCommands(args []string) error {
 		keyStr := args[1]
 		path := args[2]
 
-		var key common.Key
-		if len(key) == 32 {
-			key = common.HexToKey(keyStr)
-		} else if len(key) < 32 {
-			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
-		} else {
-			key = polarysdb.GenerateKey()
-		}
+		key := common.BytesToKey([]byte(keyStr))
+
 		c.logger.Info("Importing encrypted database with key:", key, "from path:", path)
 		if c.db == nil {
 			return fmt.Errorf("database not initialized. Please run 'init' first")
@@ -201,6 +167,23 @@ func (c *CLI) handleCommands(args []string) error {
 			return err
 		}
 		c.logger.Info("Encrypted database imported successfully.")
+	case "new-key":
+		c.logger.Info("Generating a new key...")
+		key := polarysdb.GenerateKey()
+		c.logger.Info("New key generated:", key.KeyToString())
+	case "key-from":
+		if len(args) != 2 {
+			return fmt.Errorf("usage: key-from <string>")
+		}
+		keyStr := args[1]
+		key := polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		c.logger.Info("Key generated from string:", key.KeyToString())
+	case "exit":
+		c.logger.Info("Exiting CLI.")
+		os.Exit(0)
+	case "version":
+		c.logger.Info("PolarysDB CLI Version:", c.version)
+
 	case "help":
 		c.logger.Info("Available commands:")
 		for _, cmd := range c.commands {

@@ -33,6 +33,26 @@ var Commands = []Command{
 		Args:        []string{"key", "path"},
 	},
 	{
+		Name:        "new-key",
+		Description: "Generate a new key",
+		Args:        nil,
+	},
+	{
+		Name:        "key-from",
+		Description: "Generate a key from a string",
+		Args:        []string{"string"},
+	},
+	{
+		Name:        "exit",
+		Description: "Exit CLI",
+		Args:        nil,
+	},
+	{
+		Name:        "version",
+		Description: "Show version",
+		Args:        nil,
+	},
+	{
 		Name:        "help",
 		Description: "Show help",
 		Args:        nil,
