@@ -190,14 +190,14 @@ func (c *CLI) handleCommands(args []string) error {
 	case "new-key":
 		c.logger.Info("Generating a new key...")
 		key := polarysdb.GenerateKey()
-		c.logger.Info("New key generated:", key.KeyToString())
+		c.logger.Info("New key generated:", key.String())
 	case "key-from":
 		if len(args) != 2 {
 			return fmt.Errorf("usage: key-from <string>")
 		}
 		keyStr := args[1]
 		key := polarysdb.GenerateKeyFromBytes([]byte(keyStr))
-		c.logger.Info("Key generated from string:", key.KeyToString())
+		c.logger.Info("Key generated from string:", key.String())
 	case "change-key":
 		if len(args) != 3 {
 			return fmt.Errorf("usage: change-key <old-key> <new-key>")
