@@ -106,14 +106,23 @@ func (c *CLI) handleCommands(args []string) error {
 		if len(args) != 3 {
 			return fmt.Errorf("usage: export <key> <path>")
 		}
-		key := args[1]
+		keyStr := args[1]
 		path := args[2]
+
+		var key common.Key
+		if len(key) == 32 {
+			key = common.HexToKey(keyStr)
+		} else if len(key) < 32 {
+			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		} else {
+			key = polarysdb.GenerateKey()
+		}
 
 		c.logger.Info("Exporting database with key:", key, "to path:", path)
 		if c.db == nil {
 			return fmt.Errorf("database not initialized. Please run 'init' first")
 		}
-		err := c.db.Export(polarysdb.GenerateKeyFromBytes([]byte(key)), path)
+		err := c.db.Export(key, path)
 		if err != nil {
 			return err
 		}
@@ -122,14 +131,23 @@ func (c *CLI) handleCommands(args []string) error {
 		if len(args) != 3 {
 			return fmt.Errorf("usage: import <key> <path>")
 		}
-		key := args[1]
+		keyStr := args[1]
 		path := args[2]
+
+		var key common.Key
+		if len(key) == 32 {
+			key = common.HexToKey(keyStr)
+		} else if len(key) < 32 {
+			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		} else {
+			key = polarysdb.GenerateKey()
+		}
 
 		c.logger.Info("Importing database with key:", key, "from path:", path)
 		if c.db == nil {
 			return fmt.Errorf("database not initialized. Please run 'init' first")
 		}
-		err := c.db.Import(polarysdb.GenerateKeyFromBytes([]byte(key)), path)
+		err := c.db.Import(key, path)
 		if err != nil {
 			return err
 		}
@@ -138,14 +156,23 @@ func (c *CLI) handleCommands(args []string) error {
 		if len(args) != 3 {
 			return fmt.Errorf("usage: export-encrypted <key> <path>")
 		}
-		key := args[1]
+		keyStr := args[1]
 		path := args[2]
+
+		var key common.Key
+		if len(key) == 32 {
+			key = common.HexToKey(keyStr)
+		} else if len(key) < 32 {
+			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		} else {
+			key = polarysdb.GenerateKey()
+		}
 
 		c.logger.Info("Exporting encrypted database with key:", key, "to path:", path)
 		if c.db == nil {
 			return fmt.Errorf("database not initialized. Please run 'init' first")
 		}
-		err := c.db.ExportEncrypted(polarysdb.GenerateKeyFromBytes([]byte(key)), path)
+		err := c.db.ExportEncrypted(key, path)
 		if err != nil {
 			return err
 		}
@@ -154,14 +181,22 @@ func (c *CLI) handleCommands(args []string) error {
 		if len(args) != 3 {
 			return fmt.Errorf("usage: import-encrypted <key> <path>")
 		}
-		key := args[1]
+		keyStr := args[1]
 		path := args[2]
 
+		var key common.Key
+		if len(key) == 32 {
+			key = common.HexToKey(keyStr)
+		} else if len(key) < 32 {
+			key = polarysdb.GenerateKeyFromBytes([]byte(keyStr))
+		} else {
+			key = polarysdb.GenerateKey()
+		}
 		c.logger.Info("Importing encrypted database with key:", key, "from path:", path)
 		if c.db == nil {
 			return fmt.Errorf("database not initialized. Please run 'init' first")
 		}
-		err := c.db.ImportEncrypted(polarysdb.GenerateKeyFromBytes([]byte(key)), path)
+		err := c.db.ImportEncrypted(key, path)
 		if err != nil {
 			return err
 		}
