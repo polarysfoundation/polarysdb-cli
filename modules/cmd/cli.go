@@ -26,7 +26,7 @@ func NewCLI() *CLI {
 		LogFilePath: "app.log",
 		MinLevel:    logger.LevelInfo,
 		ToConsole:   true,
-		ToFile:      true,
+		ToFile:      false,
 	})
 	return &CLI{
 		db:       nil,

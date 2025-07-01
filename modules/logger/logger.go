@@ -60,10 +60,10 @@ func NewLogger(cfg Config) *Logger {
 		errorOut := l.buildWriter(os.Stderr, file)
 
 		// Create level-based loggers
-		l.infoLogger = log.New(infoOut, "\033[34mINFO:\033[0m ", log.Ldate|log.Ltime|log.Lshortfile)
-		l.warnLogger = log.New(infoOut, "\033[33mWARN:\033[0m ", log.Ldate|log.Ltime|log.Lshortfile)
-		l.errorLogger = log.New(errorOut, "\033[31mERROR:\033[0m ", log.Ldate|log.Ltime|log.Lshortfile)
-		l.fatalLogger = log.New(errorOut, "\033[35mFATAL:\033[0m ", log.Ldate|log.Ltime|log.Lshortfile)
+		l.infoLogger = log.New(infoOut, "\033[34mINFO:\033[0m ", log.Ldate|log.Ltime)
+		l.warnLogger = log.New(infoOut, "\033[33mWARN:\033[0m ", log.Ldate|log.Ltime)
+		l.errorLogger = log.New(errorOut, "\033[31mERROR:\033[0m ", log.Ldate|log.Ltime)
+		l.fatalLogger = log.New(errorOut, "\033[35mFATAL:\033[0m ", log.Ldate|log.Ltime)
 	})
 
 	return l
